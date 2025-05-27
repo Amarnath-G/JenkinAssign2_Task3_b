@@ -1,0 +1,23 @@
+pipeline{
+    agent any
+    parameters{
+        string(name:'ip_addr',defaultValue:'',description:'ip address of remote server')
+    }
+    stages{
+        stage('ssh connection using password'){
+            steps{
+                withCredentials([string(credentialsId:'passwd',variable:'PASSWORD')]){
+                    sh 'sshpass -p ${PASSWORD} ssh -o StrictHostKeyChecking=no mt25023@${params.ip_addr}'
+                }
+            }
+        }
+    }
+    post{
+        success{
+            echo 'Connected to remote server'
+        }
+        failure{
+            echo 'Failed to connected'
+        }
+    }
+}
