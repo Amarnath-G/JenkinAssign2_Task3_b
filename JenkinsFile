@@ -7,7 +7,7 @@ pipeline{
         stage('ssh connection using password'){
             steps{
                 withCredentials([string(credentialsId:'passwd',variable:'PASSWORD')]){
-                    sh 'sshpass -p ${PASSWORD} ssh -o StrictHostKeyChecking=no mt25023@${params.ip_addr}'
+                    sh "sshpass -p '${PASSWORD}' ssh -o StrictHostKeyChecking=no mt25023@${params.ip_addr}"
                 }
             }
         }
